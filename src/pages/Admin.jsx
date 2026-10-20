@@ -140,11 +140,13 @@ function Gate({ onPass }) {
           isShaking ? 'animate-[shake_0.4s_ease-in-out]' : ''
         }`}
       >
-        <div className="mb-6">
-          <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-sea font-semibold">
-            Realtor LG
-          </p>
-          <h1 className="mt-1 font-modern font-bold text-2xl text-ink">
+        <div className="mb-6 text-center">
+          <img
+            src="/images/logo/brand-logo.webp"
+            alt="Realtor LG"
+            className="mx-auto h-12 w-auto object-contain mb-3"
+          />
+          <h1 className="font-modern font-bold text-2xl text-ink">
             Admin Sign In
           </h1>
         </div>
