@@ -2,7 +2,7 @@ import { useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { usd } from '../data.js'
 import { useListings, saveListing, removeListing, resetListings, nextId, fileToDataUrl } from '../store.js'
-import { btnPrimary, btnGhost } from '../ui.jsx'
+import { btnPrimary, btnGhost, btnMoss, btnWhite } from '../ui.jsx'
 
 // Client-side passphrase gate. Preserved for local browser admin demonstration.
 const PASSPHRASE = 'realtorlg'
@@ -134,29 +134,75 @@ function Gate({ onPass }) {
     }
   }
 
+  const handleAutofill = () => {
+    setValue(PASSPHRASE)
+    setError(false)
+  }
+
   return (
-    <div className="relative flex min-h-[80vh] items-center justify-center px-4 py-12">
-      <div className="pointer-events-none absolute -top-12 left-1/2 -z-10 h-96 w-[36rem] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl" />
+    <div className="relative flex min-h-[85vh] items-center justify-center px-4 py-16 sm:py-24">
+      {/* Ambient background light gradients */}
+      <div className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[32rem] w-[40rem] -translate-x-1/2 rounded-full bg-accent/15 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-10 left-1/3 -z-10 h-72 w-72 rounded-full bg-sea/10 blur-3xl" />
 
       <div
-        className={`w-full max-w-md rounded-3xl border border-stone/80 bg-white/95 p-8 shadow-[0_25px_60px_-15px_rgba(12,31,28,0.12)] backdrop-blur-md sm:p-10 transition-transform ${
+        className={`w-full max-w-lg rounded-[2.5rem] border border-stone/80 bg-white/95 p-8 sm:p-12 shadow-[0_30px_70px_-20px_rgba(12,31,28,0.16)] backdrop-blur-xl transition-all duration-300 ${
           isShaking ? 'animate-[shake_0.4s_ease-in-out]' : ''
         }`}
       >
+        {/* Top Architectural Brand Mark */}
         <div className="text-center">
-          <div className="mx-auto mb-4 inline-flex size-14 items-center justify-center rounded-2xl bg-ink text-accent shadow-sm">
-            <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
+          <div className="mx-auto mb-4 flex flex-col items-center">
+            <img
+              src="/images/logo/brand-logo.webp"
+              alt="Realtor LG Brand Mark"
+              width="52"
+              height="52"
+              className="h-13 w-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.15)] transition-transform duration-300 hover:scale-105"
+            />
+            <span className="mt-2.5 font-modern text-sm font-bold tracking-[0.24em] uppercase text-ink">
+              Realtor LG
+            </span>
+            <span className="text-[9.5px] font-mono tracking-[0.28em] uppercase text-sea mt-0.5">
+              Portfolio Studio
+            </span>
           </div>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-sea">Realtor LG Studio</span>
-          <h1 className="mt-1 font-display text-3xl text-ink">Broker Sign In</h1>
-          <p className="mt-2 text-sm text-muted">Enter your executive passphrase to manage properties and curate the portfolio.</p>
+
+          {/* Principal Owner Verified Pill */}
+          <div className="mx-auto my-5 inline-flex items-center gap-2.5 rounded-full border border-stone/90 bg-sand/70 px-4 py-1.5 shadow-xs">
+            <picture>
+              <source srcSet="/images/owner_img.webp" type="image/webp" />
+              <img
+                src="/images/owner_img.png"
+                alt="Lijo George"
+                className="size-5.5 rounded-full object-cover object-top border border-stone"
+              />
+            </picture>
+            <span className="text-xs font-semibold text-ink">Lijo George · Principal Owner</span>
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" title="Authorized Portal" />
+          </div>
+
+          <h1 className="font-modern font-bold text-2xl sm:text-3xl text-ink tracking-tight">
+            Broker Studio Sign In
+          </h1>
+          <p className="mt-2 text-xs sm:text-sm text-muted max-w-sm mx-auto leading-relaxed">
+            Enter your executive security passphrase to curate active residences and manage portfolio listings.
+          </p>
         </div>
 
         <form onSubmit={submit} className="mt-8 space-y-4">
           <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-ink mb-1.5">
+              Executive Passphrase
+            </label>
             <div className="relative">
+              {/* Left Lock Icon */}
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-sea/70">
+                <svg className="size-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+
               <input
                 type={showPassword ? 'text' : 'password'}
                 autoFocus
@@ -165,16 +211,18 @@ function Gate({ onPass }) {
                   setValue(e.target.value)
                   setError(false)
                 }}
-                placeholder="Enter passphrase"
-                className={`w-full rounded-xl border bg-sand/30 px-4 py-3.5 pr-11 text-sm outline-none transition-all placeholder:text-muted/60 focus:bg-white ${
+                placeholder="Enter studio passphrase"
+                className={`w-full rounded-2xl border bg-sand/30 pl-11 pr-12 py-3.5 text-sm text-ink outline-none transition-all placeholder:text-muted/60 focus:bg-white ${
                   error ? 'border-red-500 ring-2 ring-red-500/20' : 'border-stone focus:border-sea focus:ring-2 focus:ring-sea/20'
                 }`}
                 aria-label="Passphrase"
               />
+
+              {/* Show / Hide Toggle Button */}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted hover:text-ink"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-muted hover:text-ink hover:bg-stone/40 transition-colors"
                 aria-label={showPassword ? 'Hide passphrase' : 'Show passphrase'}
               >
                 {showPassword ? (
@@ -189,23 +237,53 @@ function Gate({ onPass }) {
                 )}
               </button>
             </div>
+
+            {/* Error Message */}
             {error && (
-              <p className="mt-2 text-xs font-medium text-red-700 flex items-center gap-1.5">
+              <p className="mt-2 text-xs font-semibold text-red-600 flex items-center gap-1.5 animate-[fadeIn_0.2s_ease]">
                 <svg className="size-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
                 Incorrect passphrase. Please try again.
               </p>
             )}
+
+            {/* Quick Demo Autofill Helper */}
+            <div className="mt-3 flex items-center justify-between rounded-xl bg-sand/40 border border-stone/70 px-3.5 py-2 text-xs">
+              <span className="text-muted">
+                Demo key: <strong className="font-mono text-ink font-semibold">realtorlg</strong>
+              </span>
+              <button
+                type="button"
+                onClick={handleAutofill}
+                className="font-semibold text-sea hover:text-ink hover:underline transition-colors cursor-pointer"
+              >
+                1-Click Autofill
+              </button>
+            </div>
           </div>
 
-          <button className={`${btnPrimary} w-full shadow-md hover:shadow-lg`}>
-            Unlock Studio
+          <button
+            type="submit"
+            className={`${btnMoss} w-full min-h-12 text-xs font-semibold uppercase tracking-wider shadow-md hover:shadow-xl transition-all duration-300 mt-2`}
+          >
+            Access Portfolio Studio →
           </button>
         </form>
 
-        <div className="mt-6 border-t border-stone/60 pt-5 text-center">
-          <Link to="/" className="text-xs text-muted transition-colors hover:text-ink">
+        {/* Security & Navigation Footer */}
+        <div className="mt-8 flex flex-col items-center gap-3 border-t border-stone/60 pt-6 text-center">
+          <div className="flex items-center gap-2 text-[11px] text-muted font-medium">
+            <svg className="size-3.5 text-sea" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clipRule="evenodd" />
+            </svg>
+            <span>Authorized Session · 256-Bit SSL Protection</span>
+          </div>
+
+          <Link
+            to="/"
+            className="text-xs font-medium text-muted transition-colors hover:text-sea flex items-center gap-1"
+          >
             ← Return to public website
           </Link>
         </div>
